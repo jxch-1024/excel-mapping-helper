@@ -10,51 +10,77 @@ excel映射解析框架。
 
 通过配置yaml文件，来解析一个excel文件内容到指定对象，比如说：yaml文件配置内容：
 
+
+
+```yaml
 excel:
+
   com.test.MainTest$ProdValuation:
+
     valDate: cond:[0].startsWith('日期')|default:default|[0].substring(3)
+
     #这里用到了rowOffset代表行偏移一行
+
     person: cond:[0].startsWith('统计人')|[0].substring(4)
+
     bankDeposit:
+
       entryCnd: cond:[1].equals('银行存款')
+
       properties:
+
         cost: default:10|rowOffset:1|[4]
+
     totalPricesInfos:
+
       entryCnd: cond:[1].contains('价格')
+
       properties:
+
         amount: [2]
+
         subjectName: cond:[1].equals('面额')|rowOffset:1|[0]
+
         faceInfo:
+
           properties:
+
             amount: [2]
+
+```
+
+
 
 
 我们想映射的类是com.test.MainTest$ProdValuation。
-    @Data
-    public static class ProdValuation {
-        private Set<String> valDate;
-        private BankDeposit bankDeposit;
-        private String defaultValue;
-        private List<TotalPricesInfo> totalPricesInfos = new ArrayList<>();
-        private String person;
-    }
 
-    @Data
-    public static class BankDeposit {
-        private List<Double> cost;
-    }
+```java
+@Data
+public static class ProdValuation {
+    private Set<String> valDate;
+    private BankDeposit bankDeposit;
+    private String defaultValue;
+    private List<TotalPricesInfo> totalPricesInfos = new ArrayList<>();
+    private String person;
+}
 
-    @Data
-    public static class TotalPricesInfo {
-        private double amount;
-        private String subjectName;
-        private FaceInfo faceInfo;
-    }
+@Data
+public static class BankDeposit {
+    private List<Double> cost;
+}
 
-    @Data
-    public static class FaceInfo{
-        private String amount;
-    }
+@Data
+public static class TotalPricesInfo {
+    private double amount;
+    private String subjectName;
+    private FaceInfo faceInfo;
+}
+
+@Data
+public static class FaceInfo{
+    private String amount;
+}
+```
 相应的每个字段映射方法。
 最后直接调用ExcelResolverTemplate.parse就可以解析成指定的对象，具体使用方法可以参照maven test包下的MainTest的测试用例。
 
@@ -67,4 +93,4 @@ excel:
 
 
 
-#### 码云特技
+#### 
