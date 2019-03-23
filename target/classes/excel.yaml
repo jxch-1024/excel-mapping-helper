@@ -1,0 +1,17 @@
+excel:
+  com.test.MainTest$ProdValuation:
+    valDate: cond:[0].startsWith('日期')|default:default|[0].substring(3)
+    #这里用到了rowOffset代表行偏移一行
+    person: cond:[0].startsWith('统计人')|[0].substring(4)
+    bankDeposit:
+      entryCnd: cond:[1].equals('银行存款')
+      properties:
+        cost: default:10|rowOffset:1|[4]
+    totalPricesInfos:
+      entryCnd: cond:[1].contains('价格')
+      properties:
+        amount: [2]
+        subjectName: cond:[1].equals('面额')|rowOffset:1|[0]
+        faceInfo:
+          properties:
+            amount: [2]
