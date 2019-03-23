@@ -84,11 +84,13 @@ public static class FaceInfo{
 相应的每个字段映射方法。
 最后直接调用ExcelResolverTemplate.parse就可以解析成指定的对象，具体使用方法可以参照maven test包下的MainTest的测试用例。
 
-
 涉及技术：
 1，easyExcel ：扩展了poi的一些功能。实际上，他还是基于POI的实现。
+
 2，snake: yaml文件解析技术。
+
 3，ognl: 表达式引擎。
+
 4，Apache bean操作工具类 commons-beanutils，提供一些对bean的常用操作，基于反射技术的封装。如设置属性值，获取属性值，创建对象等。
 
 
